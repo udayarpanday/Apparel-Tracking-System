@@ -4,7 +4,10 @@
     import Icon from "$lib/assets/logo.png";
     import toast from "svelte-french-toast";
     let loading = false;
-
+    import { Toaster } from "svelte-french-toast";
+    import { page } from "$app/stores";
+    let user = $page.data.user;
+    console.log(user);
 </script>
 
 <nav
@@ -28,14 +31,14 @@
                                 <div
                                     class="bg-primary-focus text-neutral-content rounded-full w-12"
                                 >
-                                    <span>UP</span>
+                                    <span>{user.name.substring(0, 1)}</span>
                                 </div>
                             </button>
                             <ul
                                 tabindex="0"
                                 class="menu dropdown-content p-2 shadow bg-white rounded-box w-52 mt-4 mr-2"
                             >
-                                <li><a>Profile</a></li>
+                                <li><a href="/profile">Profile</a></li>
                                 <form
                                     method="POST"
                                     action="/login?/logout"
@@ -106,58 +109,59 @@
                         /></svg
                     >
                     <span class="flex-1 ml-3 whitespace-nowrap">Board</span>
-                    <span
-                        class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300"
-                        >Pro</span
-                    >
                 </a>
             </li>
-            <li>
-                <a
-                    href="/user-list"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                        aria-hidden="true"
-                        class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        ><path
-                            fill-rule="evenodd"
-                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                            clip-rule="evenodd"
-                        /></svg
+            {#if (user.role[0] === "admin")}
+                <li>
+                    <a
+                        href="/worker-list"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                    <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
-                </a>
-            </li>
-            <li>
-                <a
-                    href="/products"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                        aria-hidden="true"
-                        class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        ><path
-                            fill-rule="evenodd"
-                            d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                            clip-rule="evenodd"
-                        /></svg
+                        <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            ><path
+                                fill-rule="evenodd"
+                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                clip-rule="evenodd"
+                            /></svg
+                        >
+                        <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/products"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                    <span class="flex-1 ml-3 whitespace-nowrap">Products</span>
-                </a>
-            </li>
+                        <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            ><path
+                                fill-rule="evenodd"
+                                d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                                clip-rule="evenodd"
+                            /></svg
+                        >
+                        <span class="flex-1 ml-3 whitespace-nowrap"
+                            >Products</span
+                        >
+                    </a>
+                </li>
+            {/if}
         </ul>
     </div>
 </aside>
 
 <div class="p-4 sm:ml-64">
     <div class="p-4 mt-14">
+        <Toaster />
         <slot />
     </div>
 </div>
