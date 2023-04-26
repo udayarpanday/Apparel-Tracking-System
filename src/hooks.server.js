@@ -13,7 +13,6 @@ export const handle = async ({ event, resolve }) => {
                     Authorization: token,
                 },
             });
-            console.log(user.data)
             if (user.data.data) {
                 event.locals.user = user.data.data;
             }

@@ -21,7 +21,7 @@
   }
 </script>
 
-<div class="modal-container">
+<!-- <div class="modal-container">
   <div class="flex justify-between">
     <div class="form-control w-full max-w-xs">
       <select class="select select-bordered">
@@ -34,7 +34,8 @@
     </div>
     <TaskModal taskData="" buttonType="add"/>
   </div>
-</div>
+</div> -->
+<h1 class="text-3xl font-bold text-default">Project Task Board</h1>
 <section
   class="board"
   use:dndzone={{ items: columns, flipDurationMs, type: "column" }}
@@ -47,7 +48,7 @@
         {name}
         {items}
         onDrop={(newItems) => handleItemFinalize(idx, newItems)}
-        onCl
+        
       />
     </div>
   {/each}

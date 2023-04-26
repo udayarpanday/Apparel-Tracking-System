@@ -13,6 +13,9 @@
         use:enhance={() => {
             loading = true;
             return async ({ result }) => {
+                if (result.type === "redirect") {
+                    toast.success("Success", { duration: 2000 });
+                }
                 if (result.type === "failure") {
                     toast.error(result.data.error, { duration: 7000 });
                 }

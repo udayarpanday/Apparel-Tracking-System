@@ -1,7 +1,6 @@
 <script>
   export let taskData;
   export let buttonType;
-  console.log(taskData)
 </script>
 
 <div class="text-right">
