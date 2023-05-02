@@ -53,9 +53,7 @@ const logout=async ({cookies})=>{
             }
         });
     } catch (error) {
-        console.log(error)
         const apiErrors = apiErrorResponse(error);
-        console.log(apiErrors)
         if (apiErrors) {
             if (error.response.data) {
                 return fail(error.response, apiErrors)

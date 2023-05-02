@@ -2,8 +2,8 @@
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
   import Column from "./Column.svelte";
-  import TaskModal from "$lib/components/TaskModal.svelte";
-  const flipDurationMs = 300;
+    import AddTaskModal from "./AddTaskModal.svelte";
+  const flipDurationMs = 100;
 
   export let columns;
   // will be called any time a card or a column gets dropped to update the parent data
@@ -21,24 +21,10 @@
   }
 </script>
 
-<!-- <div class="modal-container">
-  <div class="flex justify-between">
-    <div class="form-control w-full max-w-xs">
-      <select class="select select-bordered">
-        <option disabled selected>Select Category</option>
-        <option>Hoodies</option>
-        <option>Shirts</option>
-        <option>Pants</option>
-        <option>Jackets</option>
-      </select>
-    </div>
-    <TaskModal taskData="" buttonType="add"/>
-  </div>
-</div> -->
-<h1 class="text-3xl font-bold text-default">Project Task Board</h1>
+<h1 class="text-xl font-bold text-default mb-5">Project Task Board</h1>
 <section
   class="board"
-  use:dndzone={{ items: columns, flipDurationMs, type: "column" }}
+  use:dndzone={{ items: columns, flipDurationMs, type: "column",dropTargetStyle:{outline: 'rgba(0, 0, 0, 0.7) solid 5px'} }}
   on:consider={handleDndConsiderColumns}
   on:finalize={handleDndFinalizeColumns}
 >
@@ -48,26 +34,28 @@
         {name}
         {items}
         onDrop={(newItems) => handleItemFinalize(idx, newItems)}
-        
       />
+      <AddTaskModal />
     </div>
   {/each}
 </section>
 
 <style>
   .board {
-    height: 80vh;
-    width: 100%;
-    padding: 0.5em;
+    height: calc(100% - 2.5em);
+    width: 1500px;
     margin-bottom: 40px;
+    display: flex;
+    overflow-y: scroll; 
+
   }
   .column {
     height: 100%;
-    width: 353px;
+    width: 30%;
     padding: 12px;
-    margin: 12px;
+    margin-right: 12px;
     float: left;
     background-color: #ffffff;
-    overflow-y: hidden;
+    border-radius: 12px;
   }
 </style>

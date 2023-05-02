@@ -7,7 +7,6 @@
     import { Toaster } from "svelte-french-toast";
     import { page } from "$app/stores";
     let user = $page.data.user;
-    console.log(user);
 </script>
 
 <nav
@@ -95,7 +94,7 @@
             </li>
             <li>
                 <a
-                    href="/progress"
+                    href="/board"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                     <svg
@@ -111,7 +110,7 @@
                     <span class="flex-1 ml-3 whitespace-nowrap">Board</span>
                 </a>
             </li>
-            {#if (user.role[0] === "admin")}
+            {#if user.role[0] === "admin"}
                 <li>
                     <a
                         href="/worker-list"
@@ -134,7 +133,7 @@
                 </li>
                 <li>
                     <a
-                        href="/products"
+                        href="/sales"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                         <svg
@@ -150,7 +149,7 @@
                             /></svg
                         >
                         <span class="flex-1 ml-3 whitespace-nowrap"
-                            >Products</span
+                            >Sales</span
                         >
                     </a>
                 </li>
