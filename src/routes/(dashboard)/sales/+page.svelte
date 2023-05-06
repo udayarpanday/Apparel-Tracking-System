@@ -11,7 +11,7 @@
 
 <section class="text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-        <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
+        <div class="lg:w-7/12 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
             <h1 class="title-font font-medium text-3xl text-gray-900">Sales</h1>
             <p class="leading-relaxed mt-4">
                 Keep track of your products sales. You can use this form to
@@ -19,7 +19,7 @@
             </p>
         </div>
         <div
-            class="lg:w-2/6 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0"
+            class="lg:w-5/12 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0"
         >
             <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
                 Update sales history

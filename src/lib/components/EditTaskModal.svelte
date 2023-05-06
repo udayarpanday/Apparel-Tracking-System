@@ -4,10 +4,15 @@
     let user = $page.data.user;
     import Select from "svelte-select";
 
-    let items = [
-        { value: "one", label: "One" },
-        { value: "two", label: "Two" },
-        { value: "three", label: "Three" },
+    let assignItems = [
+        { value: "bidhan", label: "Bidhan" },
+        { value: "ram", label: "Ram" },
+        { value: "hari", label: "hari" },
+    ];
+    
+    let prorityItems = [
+        { value: "high", label: "High" },
+        { value: "low", label: "Low" },
     ];
 </script>
 
@@ -158,7 +163,8 @@
                 </div>
                 <div class="bg-gray mt-3">
                     <Select
-                        {items}
+                        value={assignItems[0]}
+                        items={assignItems}
                         searchable={true}
                         class="card-dropdown bar"
                         placeholder="Assign"
@@ -166,7 +172,8 @@
                 </div>
                 <div class="bg-gray mt-3">
                     <Select
-                        {items}
+                        value={prorityItems[0]}
+                        items={prorityItems}
                         searchable={true}
                         class="card-dropdown bar"
                         placeholder="Priority"
