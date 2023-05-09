@@ -4,7 +4,6 @@
 </script>
 
 <div class="overflow-x-auto w-full">
-    
     <div class="flex justify-between items-center mb-5">
         <h1 class="text-xl font-bold text-default">Worker List</h1>
         <RegisterUser modaltype="add" />
@@ -23,9 +22,9 @@
                 </tr>
             </thead>
             <tbody>
-                {#each data.data as { id, name, email, phone, address, role,joined_date }, i}
+                {#each data.data as { id, name, email, phone, address, role, joined_date }, i}
                     <tr>
-                        <td>{i+1}</td>
+                        <td>{i + 1}</td>
                         <td>
                             <div class="flex items-center space-x-3">
                                 <div>
@@ -43,5 +42,10 @@
             </tbody>
             <!-- foot -->
         </table>
+        {#if data.data.length == 0}
+            <div class="text-center pt-8" >
+                <h1 class="text-2xl">No records found</h1>
+            </div>
+        {/if}
     </div>
 </div>
