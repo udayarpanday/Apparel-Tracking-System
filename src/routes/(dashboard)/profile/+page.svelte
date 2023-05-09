@@ -3,7 +3,7 @@
     let user = $page.data.user;
 </script>
 
-<h1 class="text-2xl font-bold text-default mb-3">Profile</h1>
+<h1 class="text-2xl font-bold text-default mb-5">Profile</h1>
 <div class="flex n flex-row">
     <div
         class="block max-w-sm w-1/2 p-6 mr-4 bg-white border border-gray-200 rounded-lg "
@@ -97,7 +97,7 @@
             />
         </div>
         <div class="text-center">
-            <button class="btn btn-secondary" type="submit"> Change </button>
+            <button class="btn btn-primary " type="submit"> Change </button>
         </div>
     </div>
 </div>

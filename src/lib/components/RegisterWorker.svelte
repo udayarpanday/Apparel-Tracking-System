@@ -3,7 +3,8 @@
         name: "",
         email: "",
         position: "",
-        phone: 9841183671,
+        phone: "",
+        address: "",
         password: "",
         password_confirmation: "",
     };
@@ -16,7 +17,7 @@
 
 <div class="text-right">
     {#if modaltype == "add"}
-        <label for="my-modal-3" class="btn btn-secondary btn-block btn-outline">
+        <label for="my-modal-3" class="btn btn-primary btn-block btn-outline">
             Register an User</label
         >
     {:else if modaltype == "update"}
@@ -38,7 +39,7 @@
     {/if}
 </div>
 
-<!-- Put this part before </body> tag -->
+
 {#if openmodal}
     <input type="checkbox" id="my-modal-3" class="modal-toggle" />
 
@@ -46,7 +47,7 @@
         <div class="modal-box relative">
             <label
                 for="my-modal-3"
-                class="btn btn-sm btn-circle btn-secondary absolute right-2 top-2"
+                class="btn btn-sm btn-circle btn-primary absolute right-2 top-2"
                 >✕</label
             >
             {#if modaltype == "add"}
@@ -75,7 +76,7 @@
             >
                 <div class="form-control mt-3 mb-3">
                     <label class="label">
-                        <span class="label-text">Name</span>
+                        <span class="label-text">* Name</span>
                     </label>
                     <input
                         type="text"
@@ -87,19 +88,7 @@
                 </div>
                 <div class="form-control mt-3 mb-3">
                     <label class="label">
-                        <span class="label-text">Email</span>
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="User Email"
-                        class="input input-bordered"
-                        value={userData?.email}
-                    />
-                </div>
-                <div class="form-control mt-3 mb-3">
-                    <label class="label">
-                        <span class="label-text">Phone</span>
+                        <span class="label-text">* Phone</span>
                     </label>
                     <input
                         type="number"
@@ -121,9 +110,23 @@
                         value={userData?.address}
                     />
                 </div>
+                <div class="divider mb-2"></div>
+                <h3 class="text-base font-bold">Account credentials to login to the system.</h3>
+                <div class="form-control mb-3">
+                    <label class="label">
+                        <span class="label-text">* Email</span>
+                    </label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="User Email"
+                        class="input input-bordered"
+                        value={userData?.email}
+                    />
+                </div>
                 <div class="form-control mt-3 mb-3">
                     <label class="label">
-                        <span class="label-text">Password</span>
+                        <span class="label-text">* Password</span>
                     </label>
                     <input
                         type="password"
@@ -133,9 +136,9 @@
                         value={userData?.password}
                     />
                 </div>
-                <div class="form-control mt-3 mb-3">
+                <div class="form-control mt-3 ">
                     <label class="label">
-                        <span class="label-text">Password Confirmation</span>
+                        <span class="label-text">* Password Confirmation</span>
                     </label>
                     <input
                         type="password"
@@ -144,9 +147,10 @@
                         class="input input-bordered"
                         value={userData?.password_confirmation}
                     />
+                    <span class="text-xs font-extralight mt-1">Your passowrd and confirm password should match.</span>
                 </div>
-                <div class="text-center">
-                    <button class="btn btn-secondary" type="submit">
+                <div class="text-center mt-6">
+                    <button class="btn btn-primary" type="submit">
                         Submit
                     </button>
                 </div>
