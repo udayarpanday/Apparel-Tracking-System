@@ -14,8 +14,9 @@
         <div class="lg:w-7/12 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
             <h1 class="title-font font-medium text-3xl text-gray-900">Sales</h1>
             <p class="leading-relaxed mt-4">
-                Keep track of your products sales. You can use this form to
-                generate valuabale data which project
+                Keep track of your products sales. Update this form after every
+                sales so you can use this valuable data generate information,
+                charts to keep track of your business.
             </p>
         </div>
         <div
@@ -29,8 +30,8 @@
                 method="POST"
                 action="?/addSalesDetails"
                 use:enhance={(data) => {
-                    data.data.delete("category_id")
-                    data.data.set("category_id",value.value)
+                    data.data.delete("category_id");
+                    data.data.set("category_id", value.value);
                     return async ({ result }) => {
                         if (result.type === "redirect") {
                             toast.success("Success", { duration: 7000 });
@@ -89,7 +90,6 @@
                     />
                 </div>
                 <div class="text-center">
-
                     <button class="btn btn-primary mt-6" type="submit">
                         Submit
                     </button>

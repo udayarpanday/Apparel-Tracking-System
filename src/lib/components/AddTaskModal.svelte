@@ -6,7 +6,6 @@
     + Add a card</label
 >
 
-<!-- Put this part before </body> tag -->
 <input type="checkbox" id="my-modal-3" class="modal-toggle" />
 <div class="modal">
     <div class="modal-box relative">
@@ -51,7 +50,6 @@
             <select class="select select-bordered">
                 <option disabled selected>Pick one</option>
                 <option>High</option>
-                <option>Medium</option>
                 <option>Low</option>
             </select>
         </div>

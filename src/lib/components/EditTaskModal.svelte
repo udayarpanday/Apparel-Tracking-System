@@ -1,5 +1,7 @@
 <script>
     export let taskData;
+    export let openmodal;
+
     import { page } from "$app/stores";
     let user = $page.data.user;
     import Select from "svelte-select";

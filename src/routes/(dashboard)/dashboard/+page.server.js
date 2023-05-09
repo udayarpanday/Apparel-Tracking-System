@@ -3,8 +3,9 @@ import { httpGet, httpPost } from "$lib/helper/https";
 import { fail, redirect } from "@sveltejs/kit";
 
 export const load = async ({ cookies }) => {
-    let data={
-        category:{},
+    let data = {
+        category: {},
+        dashboard:{}
     };
     const token = cookies.get("token");
     try {
@@ -13,10 +14,22 @@ export const load = async ({ cookies }) => {
                 authorization: token,
             },
         });
-        data.category=category.data.data
+
+        const dashboard = await httpGet("api/dashboard", {
+            headers: {
+                authorization: token,
+            },
+        });
+        data.dashboard=dashboard.data.data
+        if (category) {
+            data.category = category.data.data.map((category) => {
+                return { value: category.id, label: category.name };
+            });
+        } else {
+            data.category = {};
+        }
     } catch (error) {
         return { error: "Something went wrong" };
     }
-    return {data};
+    return { data };
 };
-

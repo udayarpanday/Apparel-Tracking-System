@@ -7,7 +7,7 @@
     export let items;
     export let onDrop;
     let cardData = {};
-    let isModalOpen = true;
+    let isModalOpen = false;
 
     function handleDndConsiderCards(e) {
         console.warn("got consider", name);
@@ -19,7 +19,6 @@
     function handleClick(item) {
         cardData = item;
         isModalOpen = true;
-        console.log(cardData, isModalOpen);
     }
 </script>
 
@@ -42,9 +41,11 @@
         on:finalize={handleDndFinalizeCards}
     >
         {#each items as item (item.id)}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
                 class="card hover:bg-gray-300"
                 animate:flip={{ duration: flipDurationMs }}
+                on:click={() => handleClick(item)}
             >
                 <div class="flex justify-between p-3 w-100">
                     <div class="w-full">
@@ -52,7 +53,7 @@
                             <h1 class="text-base">
                                 {item.name}
                             </h1>
-                            <EditTaskModal taskData={item} />
+                                <EditTaskModal openmodal={isModalOpen} taskData={cardData} />
                         </div>
                         <div class="pt-2 pb-0">
                             <div
@@ -65,7 +66,9 @@
                                 </p>
                             </div>
                             <div class="avatar placeholder">
-                                <div class="bg-primary-focus text-neutral-content rounded-xl w-6">
+                                <div
+                                    class="bg-primary-focus text-neutral-content rounded-xl w-6"
+                                >
                                     <span class="text-sm font-bold"
                                         >{item.assignedTo.substring(0, 1)}</span
                                     >
