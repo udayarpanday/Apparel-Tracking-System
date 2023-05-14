@@ -9,7 +9,7 @@ let data = {
     task: {},
     worker: {},
 };
-export const load = async ({ cookies }) => {
+export const load = async ({ cookies, locals }) => {
     const token = cookies.get("token");
 
     try {
@@ -18,13 +18,17 @@ export const load = async ({ cookies }) => {
                 authorization: token,
             },
         });
-        const worker = await httpGet("api/worker", {
-            headers: {
-                authorization: token,
-            },
-        });
+        data.worker = [];
+        if(locals.user.role[0] !== 'worker'){
+            const worker = await httpGet("api/worker", {
+                headers: {
+                    authorization: token,
+                },
+            });
+            data.worker = worker.data.data;
+        }
         data.board = board.data.data;
-        data.worker = worker.data.data;
+
     } catch (error) {
         return { error: "Something went wrong" };
     }
