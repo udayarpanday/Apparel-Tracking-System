@@ -17,6 +17,7 @@ const httpPut = async (url, data, config) => {
     return await backend.put(url, data, config);
 };
 
+
 const httpDelete = async (url, config) => {
     return await backend.delete(url, config);
 };
