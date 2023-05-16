@@ -8,34 +8,35 @@
     let user = $page.data.user;
     export let item;
     let openmodal = true;
-    console.log(item)
+    let taskData = {
+        title: "",
+        description: "",
+        assignee: {
+            id: "",
+            name: "",
+        },
+        priority: "",
+    };
+    $: {
+        taskData = item;
+    }
 </script>
 
+<!-- {@debug(taskData)} -->
 {#if openmodal}
-    <input type="checkbox" id="my-modal-4" class="modal-toggle" />
-    <label for="my-modal-4" class="modal cursor-pointer">
+    <input
+        type="checkbox"
+        id={`my-modal-${taskData.id}`}
+        class="modal-toggle"
+    />
+    <label for={`my-modal-${taskData.id}`} class="modal cursor-pointer">
         <label class="modal-box w-11/12 max-w-5xl" for="">
             <label
-                for="my-modal-4"
+                for={`my-modal-${taskData.id}`}
                 class="btn btn-primary btn-sm btn-circle absolute right-2 top-2"
                 >✕</label
             >
-            <form
-                method="POST"
-                action="?/updateTask"
-                use:enhance={() => {
-                    return async ({ result }) => {
-                        if (result.type === "success") {
-                            toast.success("Success", { duration: 7000 });
-                        }
-                        if (result.type === "failure") {
-                            toast.error(result.data.error, { duration: 7000 });
-                        }
-
-                        await applyAction(result);
-                    };
-                }}
-            >
+            <form method="POST" action="?/updateTask">
                 <div class="text-left flex items-center mt-9">
                     <svg
                         fill="none"
@@ -57,7 +58,7 @@
                         placeholder="Task Title"
                         class="ml-3 input input-bordered w-full min-w-max font-bold text-2xl input-ghost"
                         name="title"
-                        value={item?.title}
+                        value={taskData?.title}
                     />
                 </div>
                 <div class="flex justify-between">
@@ -89,7 +90,7 @@
                                     placeholder="Add a more detailed description"
                                     class="textarea textarea-bordered w-full min-w-max p2 h-48"
                                     name="description"
-                                    value={item.description}
+                                    value={taskData.description}
                                 />
                             </div>
                         </div>
@@ -126,28 +127,12 @@
                                     class="w-full"
                                     method="POST"
                                     action="?/postComments"
-                                    use:enhance={() => {
-                                        return async ({ result }) => {
-                                            if (result.type === "redirect") {
-                                                toast.success("Success", {
-                                                    duration: 7000,
-                                                });
-                                            }
-                                            if (result.type === "failure") {
-                                                toast.error(result.data.error, {
-                                                    duration: 7000,
-                                                });
-                                            }
-
-                                            applyAction(result);
-                                        };
-                                    }}
                                 >
                                     <div class="form-control mt-3 mb-3 hidden">
                                         <input
                                             type="hidden"
                                             name="task_id"
-                                            value={item.id}
+                                            value={taskData.id}
                                         />
                                     </div>
                                     <div class="form-control mt-3 mb-3 hidden">
@@ -165,7 +150,7 @@
                                                 placeholder="Write a comment"
                                                 class="input input-bordered w-full"
                                             />
-                                           
+
                                             <button
                                                 class="btn btn-ghost btn-outline"
                                                 type="submit"
@@ -191,46 +176,18 @@
                                 </form>
                             </div>
                             <form>
-                                {#if item.comments}
-                                    {#each item.comments as comment}
+                                {#if taskData.comments}
+                                    {#each taskData.comments as comment}
                                         <form
                                             class="w-full"
                                             method="POST"
                                             action="?/updateComment"
-                                            use:enhance={() => {
-                                                return async ({ result }) => {
-                                                    if (
-                                                        result.type ===
-                                                        "success"
-                                                    ) {
-                                                        toast.success(
-                                                            "Success",
-                                                            {
-                                                                duration: 7000,
-                                                            }
-                                                        );
-                                                    }
-                                                    if (
-                                                        result.type ===
-                                                        "failure"
-                                                    ) {
-                                                        toast.error(
-                                                            result.data.error,
-                                                            {
-                                                                duration: 7000,
-                                                            }
-                                                        );
-                                                    }
-
-                                                    applyAction(result);
-                                                };
-                                            }}
                                         >
                                             <div class="form-control hidden">
                                                 <input
                                                     type="hidden"
                                                     name="task_id"
-                                                    value={item.id}
+                                                    value={taskData.id}
                                                 />
                                             </div>
                                             <div class="form-control hidden">
@@ -240,7 +197,9 @@
                                                     value={comment.id}
                                                 />
                                             </div>
-                                            <div class="form-control mt-3 mb-3 hidden">
+                                            <div
+                                                class="form-control mt-3 mb-3 hidden"
+                                            >
                                                 <input
                                                     type="hidden"
                                                     name="sender"
@@ -286,96 +245,62 @@
                                                                 placeholder="Write a comment"
                                                                 class="input input-bordered w-full"
                                                             />
-                                                            
-                                                            <button
-                                                                class="btn btn-ghost btn-outline"
-                                                                type="submit"
-                                                            >
-                                                                <svg
-                                                                    fill="none"
-                                                                    stroke="currentColor"
-                                                                    stroke-width="1.5"
-                                                                    viewBox="0 0 24 24"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    aria-hidden="true"
-                                                                    class="h-4 w-4"
-                                                                >
-                                                                    <path
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                                                                    />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                        <div
-                                                            class="text-left text-sm m-2 underline"
-                                                        >
-                                                            <form
-                                                                class="w-full"
-                                                                method="POST"
-                                                                action="?/deleteComment"
-                                                                use:enhance={() => {
-                                                                    return async ({
-                                                                        result,
-                                                                    }) => {
-                                                                        console.log(
-                                                                            result
-                                                                        );
-                                                                        if (
-                                                                            result.type ===
-                                                                            "redirect"
-                                                                        ) {
-                                                                            toast.success(
-                                                                                "Success",
-                                                                                {
-                                                                                    duration: 7000,
-                                                                                }
-                                                                            );
-                                                                        }
-                                                                        if (
-                                                                            result.type ===
-                                                                            "failure"
-                                                                        ) {
-                                                                            toast.error(
-                                                                                result
-                                                                                    .data
-                                                                                    .error,
-                                                                                {
-                                                                                    duration: 7000,
-                                                                                }
-                                                                            );
-                                                                        }
-
-                                                                        applyAction(
-                                                                            result
-                                                                        );
-                                                                    };
-                                                                }}
-                                                            >
-                                                                <div
-                                                                    class="form-control hidden"
-                                                                >
-                                                                    <input
-                                                                        type="hidden"
-                                                                        name="task_id"
-                                                                        value={item.id}
-                                                                    />
-                                                                </div>
-                                                                <div
-                                                                    class="form-control hidden"
-                                                                >
-                                                                    <input
-                                                                        type="hidden"
-                                                                        name="comment_id"
-                                                                        value={comment.id}
-                                                                    />
-                                                                </div>
+                                                            {#if user.id === comment.sender.id}
                                                                 <button
-                                                                    >Delete</button
+                                                                    class="btn btn-ghost btn-outline"
+                                                                    type="submit"
                                                                 >
-                                                            </form>
+                                                                    <svg
+                                                                        fill="none"
+                                                                        stroke="currentColor"
+                                                                        stroke-width="1.5"
+                                                                        viewBox="0 0 24 24"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        aria-hidden="true"
+                                                                        class="h-4 w-4"
+                                                                    >
+                                                                        <path
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                                                                        />
+                                                                    </svg>
+                                                                </button>
+                                                            {/if}
                                                         </div>
+                                                        {#if user.id === comment.sender.id}
+                                                            <div
+                                                                class="text-left text-sm m-2 underline"
+                                                            >
+                                                                <form
+                                                                    class="w-full"
+                                                                    method="POST"
+                                                                    action="?/deleteComment"
+                                                                >
+                                                                    <div
+                                                                        class="form-control hidden"
+                                                                    >
+                                                                        <input
+                                                                            type="hidden"
+                                                                            name="task_id"
+                                                                            value={taskData.id}
+                                                                        />
+                                                                    </div>
+                                                                    <div
+                                                                        class="form-control hidden"
+                                                                    >
+                                                                        <input
+                                                                            type="hidden"
+                                                                            name="comment_id"
+                                                                            value={comment.id}
+                                                                        />
+                                                                    </div>
+                                                                    <button
+                                                                        >Delete</button
+                                                                    >
+                                                                </form>
+                                                            </div>
+                                                        {/if}
                                                     </div>
                                                 </div>
                                             </div>
@@ -398,9 +323,9 @@
                                 class="select select-bordered"
                             >
                                 <option
-                                    value={item.assignee?.id}
+                                    value={taskData.assignee?.id}
                                     disabled
-                                    selected>{item.assignee?.name}</option
+                                    selected>{taskData.assignee?.name}</option
                                 >
                                 {#each workerList as workers}
                                     <option value={workers.id}
@@ -417,8 +342,10 @@
                                 name="priority"
                                 class="select select-bordered"
                             >
-                                <option value={item?.priority} disabled selected
-                                    >{item?.priority}</option
+                                <option
+                                    value={taskData?.priority}
+                                    disabled
+                                    selected>{taskData?.priority}</option
                                 >
                                 <option value="high">High</option>
                                 <option value="medium">Medium</option>
@@ -427,7 +354,11 @@
                         </div>
                         <div class="divider" />
                         <div class="form-control mt-3 mb-3 hidden">
-                            <input type="hidden" name="id" value={item.id} />
+                            <input
+                                type="hidden"
+                                name="id"
+                                value={taskData.id}
+                            />
                         </div>
                         <div class="form-control mt-3 mb-3 hidden">
                             <input
@@ -447,29 +378,13 @@
                         <form
                             method="POST"
                             action="?/deleteTask"
-                            use:enhance={() => {
-                                return async ({ result }) => {
-                                    if (result.type === "redirect") {
-                                        toast.success("Task Deleted", {
-                                            duration: 7000,
-                                        });
-                                        openmodal = false;
-                                    }
-                                    if (result.type === "failure") {
-                                        toast.error(result.data.error, {
-                                            duration: 7000,
-                                        });
-                                    }
-
-                                    await applyAction(result);
-                                };
-                            }}
+                           
                         >
                             <div class="form-control mt-3 mb-3 hidden">
                                 <input
                                     type="hidden"
                                     name="id"
-                                    value={item.id}
+                                    value={taskData.id}
                                 />
                             </div>
                             <div class="flex items-center justify-center">

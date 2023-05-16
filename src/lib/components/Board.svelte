@@ -7,6 +7,8 @@
 
     export let columns;
     export let workerList;
+    export let cookie;
+    let updatedColumns = [];
     // will be called any time a card or a column gets dropped to update the parent data
     export let onFinalUpdate;
     function handleDndConsiderColumns(e) {
@@ -15,10 +17,28 @@
     function handleDndFinalizeColumns(e) {
         onFinalUpdate(e.detail.tasks);
     }
-    function handleItemFinalize(columnIdx, newItems) {
+    function handleItemFinalize(columnIdx, newItems, updatedId) {
         columns[columnIdx].tasks = newItems;
         onFinalUpdate([...columns]);
+        updatedColumns.push(columnIdx);
+        updateBoard(updatedId);
     }
+    const updateBoard = async (updatedId) => {
+        if (updatedColumns.length == 2) {
+            const payload = {
+                board_category_id: updatedColumns[0]+1,
+            };
+            const response = await fetch(`http://127.0.0.1:8000/api/tasks/${updatedId}`, {
+                method: "PUT",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: cookie,
+                },
+            });
+            updatedColumns = [];
+        }
+    };
 </script>
 
 <h1 class="text-xl font-bold text-default mb-5">Project Task Board</h1>
@@ -41,14 +61,14 @@
                 items={tasks}
                 boardId={id}
                 {workerList}
-                onDrop={(newItems) => handleItemFinalize(idx, newItems)}
+                onDrop={(newItems, updatedId) => {
+                    handleItemFinalize(idx, newItems, updatedId);
+                }}
             />
 
             <AddTaskModal boardId={id} {workerList} />
         </div>
-        
     {/each}
-    
 </section>
 
 <style>

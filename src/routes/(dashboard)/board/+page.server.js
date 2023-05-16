@@ -8,10 +8,10 @@ let data = {
     board: {},
     task: {},
     worker: {},
+    cookie:''
 };
 export const load = async ({ cookies, locals }) => {
     const token = cookies.get("token");
-
     try {
         const board = await httpGet("api/board-categories", {
             headers: {
@@ -28,7 +28,8 @@ export const load = async ({ cookies, locals }) => {
             data.worker = worker.data.data;
         }
         data.board = board.data.data;
-
+        data.cookie=token
+        
     } catch (error) {
         return { error: "Something went wrong" };
     }
@@ -121,7 +122,6 @@ const postComments = async ({ cookies,request }) => {
     throw redirect(302, "/board");
 };
 
-
 const updateComment = async ({ cookies, request }) => {
     const token = cookies.get("token");
     const formData = await request.formData();
@@ -150,7 +150,6 @@ const updateComment = async ({ cookies, request }) => {
         }
     }
 };
-
 
 const deleteComment = async ({ cookies, request }) => {
     const token = cookies.get("token");

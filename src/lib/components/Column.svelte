@@ -2,24 +2,24 @@
     import { flip } from "svelte/animate";
     import { dndzone } from "svelte-dnd-action";
     import EditTaskModal from "./EditTaskModal.svelte";
-    import { debug } from "svelte/internal";
     const flipDurationMs = 150;
     export let name;
     export let items;
     export let onDrop;
     export let boardId;
     export let workerList;
+    let openmodal = false;
     let cardData = {};
 
     function handleDndConsiderCards(e) {
-        console.warn("got consider", name);
         items = e.detail.items;
     }
     function handleDndFinalizeCards(e) {
-        onDrop(e.detail.items);
+        onDrop(e.detail.items, e.detail.info.id);
     }
     function handleClick(item) {
         cardData = item;
+        openmodal = true;
     }
 </script>
 
@@ -49,7 +49,7 @@
             >
                 <div on:click={() => handleClick(item)}>
                     <div class="text-right">
-                        <label for="my-modal-4" class="cursor-pointer">
+                        <label for={`my-modal-${item.id}`} class="cursor-pointer">
                             <div class="flex justify-between p-3 w-100">
                                 <div class="w-full">
                                     <div class="flex justify-between">
@@ -63,7 +63,7 @@
                                                 'high' && 'badge-error w-8'}
                                         {item.priority == 'low' &&
                                                 'badge-warning w-8'} {item.priority ==
-                                                'low' &&
+                                                'medium' &&
                                                 'badge-primary w-12'} lowercase p-2 rounded-2xl"
                                         >
                                             <p class="text-xs">
@@ -101,8 +101,9 @@
         {/if}
     </div>
 </div>
-
-<EditTaskModal {boardId} item={cardData} {workerList} />
+{#if openmodal}
+    <EditTaskModal {boardId} item={cardData} {workerList} />
+{/if}
 
 <style>
     .wrapper {
