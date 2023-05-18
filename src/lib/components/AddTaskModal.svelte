@@ -22,23 +22,7 @@
                 >✕</label
             >
             <h1 class="text-lg font-bold">Add a new task</h1>
-            <form
-                method="POST"
-                action="?/createTask"
-                use:enhance={() => {
-                    return async ({ result }) => {
-                        if (result.type === "redirect") {
-                            toast.success("Success", { duration: 7000 });
-                            openmodal = false;
-                        }
-                        if (result.type === "failure") {
-                            toast.error(result.data.error, { duration: 7000 });
-                        }
-
-                        await applyAction(result);
-                    };
-                }}
-            >
+            <form method="POST" action="?/createTask">
                 <div class="form-control mt-3 mb-3">
                     <label class="label">
                         <span class="label-text">Title</span>

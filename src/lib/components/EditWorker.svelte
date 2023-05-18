@@ -1,64 +1,61 @@
 <script>
-    let userData = {
-        name: "",
-        email: "",
-        position: "",
-        phone: "",
-        address: "",
-        password: "",
-        password_confirmation: "",
-    };
-    export let modaltype;
+    let userData = {};
     import { applyAction, enhance } from "$app/forms";
     import toast from "svelte-french-toast";
     let loading = false;
     let openmodal = true;
+    export let workerData;
+    $: {
+        userData = workerData;
+    }
 </script>
 
 <div class="text-right">
-    {#if modaltype == "add"}
-        <label for="my-modal-9993" class="btn btn-primary btn-block btn-outline">
-            Register an User</label
+    <label
+        for={`my-modal-${userData?.id}`}
+        on:click={() => {
+            openmodal = true;
+        }}
+        class="cursor-pointer"
+    >
+        <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            class="w-5 h-5"
         >
-    {:else if modaltype == "update"}
-        <label for="my-modal-9993" class="cursor-pointer">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                /></svg
-            >
-        </label>
-    {/if}
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+            />
+        </svg>
+    </label>
 </div>
 
-
 {#if openmodal}
-    <input type="checkbox" id="my-modal-9993" class="modal-toggle" />
+    <input
+        type="checkbox"
+        id={`my-modal-${userData?.id}`}
+        class="modal-toggle"
+    />
 
     <div class="modal">
         <div class="modal-box relative">
             <label
-                for="my-modal-9993"
+                for={`my-modal-${userData?.id}`}
                 class="btn btn-sm btn-circle btn-primary absolute right-2 top-2"
                 >✕</label
             >
-            {#if modaltype == "add"}
-                <h1 class="text-lg font-bold">Add a new user</h1>
-            {:else if modaltype == "update"}
-                <h1 class="text-lg font-bold">Edit user</h1>
-            {/if}
+
+            <h1 class="text-lg font-bold">Edit user</h1>
 
             <form
                 method="POST"
-                action="?/registerUser"
+                action="?/updateUser"
                 use:enhance={() => {
                     loading = true;
                     return async ({ result }) => {
@@ -110,8 +107,7 @@
                         value={userData?.address}
                     />
                 </div>
-                <div class="divider mb-2"></div>
-                <h3 class="text-base font-bold">Account credentials to login to the system.</h3>
+
                 <div class="form-control mb-3">
                     <label class="label">
                         <span class="label-text">* Email</span>
@@ -124,30 +120,8 @@
                         value={userData?.email}
                     />
                 </div>
-                <div class="form-control mt-3 mb-3">
-                    <label class="label">
-                        <span class="label-text">* Password</span>
-                    </label>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        class="input input-bordered"
-                        value={userData?.password}
-                    />
-                </div>
-                <div class="form-control mt-3 ">
-                    <label class="label">
-                        <span class="label-text">* Password Confirmation</span>
-                    </label>
-                    <input
-                        type="password"
-                        name="password_confirmation"
-                        placeholder="Password Confirmation"
-                        class="input input-bordered"
-                        value={userData?.password_confirmation}
-                    />
-                    <span class="text-xs font-extralight mt-1">Your passowrd and confirm password should match.</span>
+                <div class="form-control hidden">
+                    <input type="hidden" name="id" value={userData?.id} />
                 </div>
                 <div class="text-center mt-6">
                     <button class="btn btn-primary" type="submit">

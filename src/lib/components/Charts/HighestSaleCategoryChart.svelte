@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
 
     import { Bar, Line } from "svelte-chartjs";
     import {
@@ -74,5 +74,15 @@
         };
     }
 </script>
+<div class="canvas">
 
-<Bar data={profitData} width={30} height={10} options={{ responsive: true }} />
+    <Bar data={profitData} width={30} height={10} options={{ responsive: true }} />
+</div>
+
+<style>
+    .canvas {
+        background: white;
+        padding: 20px;
+        border-radius: 26px;
+    }
+</style>
