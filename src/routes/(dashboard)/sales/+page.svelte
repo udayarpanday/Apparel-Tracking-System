@@ -30,8 +30,10 @@
                 method="POST"
                 action="?/addSalesDetails"
                 use:enhance={(data) => {
-                    data.data.delete("category_id");
-                    data.data.set("category_id", value.value);
+                    if (value?.value) {
+                        data.data.delete("category_id");
+                        data.data.set("category_id", value.value);
+                    }
                     return async ({ result }) => {
                         if (result.type === "redirect") {
                             toast.success("Success", { duration: 7000 });
