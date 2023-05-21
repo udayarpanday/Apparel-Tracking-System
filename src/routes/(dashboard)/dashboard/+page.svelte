@@ -33,7 +33,7 @@
         <div class="card-body">
             <h2 class="card-title justify-center">Total Orders</h2>
             <div class="card-actions justify-center">
-                <h1 class="text-5xl">{profitData.total_orders}</h1>
+                <h1 class="text-3xl">{profitData.total_orders}</h1>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
         <div class="card-body">
             <h2 class="card-title justify-center">Total Profit</h2>
             <div class="card-actions items-end justify-center">
-                <h1 class="text-5xl">Rs {profitData.total_profits}</h1>
+                <h1 class="text-3xl">Rs {profitData.total_profits}</h1>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
         <div class="card-body">
             <h2 class="card-title justify-center">Total Category</h2>
             <div class="card-actions justify-center">
-                <h1 class="text-5xl">{totalCategories}</h1>
+                <h1 class="text-3xl">{totalCategories}</h1>
             </div>
         </div>
     </div>

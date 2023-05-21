@@ -41,7 +41,7 @@
                     label: selectedItem[0].category.name,
                     fill: true,
                     lineTension: 0.3,
-                    backgroundColor: "rgba(225, 204,230, .3)",
+                    backgroundColor: "rgba(225, 204,230)",
                     borderColor: "rgb(205, 130, 158)",
                     borderCapStyle: "butt",
                     borderDash: [],
@@ -62,5 +62,15 @@
         };
     }
 </script>
+<div class="canvas">
 
-<Line data={profitData} width={30} height={10} options={{ responsive: true }} />
+    <Line data={profitData} width={30} height={10} options={{ responsive: true }} />
+</div>
+
+<style>
+    .canvas {
+        background: white;
+        padding: 20px;
+        border-radius: 26px;
+    }
+</style>

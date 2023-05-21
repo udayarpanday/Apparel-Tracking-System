@@ -6,19 +6,20 @@
     export let name;
     export let items;
     export let onDrop;
+    export let boardId;
+    export let workerList;
+    let openmodal = false;
     let cardData = {};
-    let isModalOpen = false;
 
     function handleDndConsiderCards(e) {
-        console.warn("got consider", name);
         items = e.detail.items;
     }
     function handleDndFinalizeCards(e) {
-        onDrop(e.detail.items);
+        onDrop(e.detail.items, e.detail.info.id);
     }
     function handleClick(item) {
         cardData = item;
-        isModalOpen = true;
+        openmodal = true;
     }
 </script>
 
@@ -45,36 +46,46 @@
             <div
                 class="card hover:bg-gray-300"
                 animate:flip={{ duration: flipDurationMs }}
-                on:click={() => handleClick(item)}
             >
-                <div class="flex justify-between p-3 w-100">
-                    <div class="w-full">
-                        <div class="flex justify-between">
-                            <h1 class="text-base">
-                                {item.name}
-                            </h1>
-                                <EditTaskModal openmodal={isModalOpen} taskData={cardData} />
-                        </div>
-                        <div class="pt-2 pb-0">
-                            <div
-                                class="badge {item.priority == 'High'
-                                    ? 'badge-error'
-                                    : 'badge-warning'} lowercase w-8 p-1 rounded-xl"
-                            >
-                                <p class="text-xs">
-                                    {item.priority}
-                                </p>
-                            </div>
-                            <div class="avatar placeholder">
-                                <div
-                                    class="bg-primary-focus text-neutral-content rounded-xl w-6"
-                                >
-                                    <span class="text-sm font-bold"
-                                        >{item.assignedTo.substring(0, 1)}</span
-                                    >
+                <div on:click={() => handleClick(item)}>
+                    <div class="text-right">
+                        <label for={`my-modal-${item.id}`} class="cursor-pointer">
+                            <div class="flex justify-between p-3 w-100">
+                                <div class="w-full">
+                                    <div class="flex justify-between">
+                                        <h1 class="text-base">
+                                            {item.title}
+                                        </h1>
+                                    </div>
+                                    <div class="pt-2 pb-0">
+                                        <div
+                                            class="badge {item.priority ==
+                                                'high' && 'badge-error w-8'}
+                                        {item.priority == 'low' &&
+                                                'badge-warning w-8'} {item.priority ==
+                                                'medium' &&
+                                                'badge-primary w-12'} lowercase p-2 rounded-2xl"
+                                        >
+                                            <p class="text-xs">
+                                                {item.priority}
+                                            </p>
+                                        </div>
+                                        <div class="avatar placeholder pl-1">
+                                            <div
+                                                class="bg-primary-focus text-neutral-content rounded-xl w-6"
+                                            >
+                                                <span class="text-sm font-bold"
+                                                    >{item.assignee.name.substring(
+                                                        0,
+                                                        1
+                                                    )}</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -90,6 +101,9 @@
         {/if}
     </div>
 </div>
+{#if openmodal}
+    <EditTaskModal {boardId} item={cardData} {workerList} />
+{/if}
 
 <style>
     .wrapper {

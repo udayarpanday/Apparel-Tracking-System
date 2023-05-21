@@ -129,7 +129,7 @@
                                 clip-rule="evenodd"
                             /></svg
                         >
-                        <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Workers</span>
                     </a>
                 </li>
                 <li>
