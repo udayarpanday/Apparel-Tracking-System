@@ -1,24 +1,26 @@
 <script>
     import { page } from "$app/stores";
     let user = $page.data.user;
+    import { applyAction, enhance } from "$app/forms";
+    import toast from "svelte-french-toast";
 </script>
 
 <h1 class="text-2xl font-bold text-default mb-5">Profile</h1>
 <div class="flex n flex-row">
     <div
-        class="block max-w-sm w-1/2 p-6 mr-4 bg-white border border-gray-200 rounded-lg "
+        class="block max-w-sm w-1/2 p-6 mr-4 bg-white border border-gray-200 rounded-lg"
     >
         <div class="avatar placeholder text-center">
-            <div
-                class="bg-neutral-focus text-neutral-content rounded-xl w-24"
-            >
-                <span class="text-3xl ">{user.name.substring(0, 1)}</span>
+            <div class="bg-neutral-focus text-neutral-content rounded-xl w-24">
+                <span class="text-3xl">{user.name.substring(0, 1)}</span>
             </div>
         </div>
         <div class="pt-4 pb-4 pr-4">
-            <h1 class="text-3xl font-bold text-default text-primary">{user.name}</h1>
+            <h1 class="text-3xl font-bold text-default text-primary">
+                {user.name}
+            </h1>
         </div>
-        <div class="pb-4 pr-4 ">
+        <div class="pb-4 pr-4">
             <div class="flex items-center">
                 <svg
                     aria-hidden="true"
@@ -58,11 +60,11 @@
                 <h3 class="ml-3 text-lg font-bold">{user.address}</h3>
             </div>
         </div>
-        <div class="pb-4 pr-4 ">
+        <div class="pb-4 pr-4">
             <p class="text-base font-light">Email Address</p>
             <h3 class="text-lg font-bold">{user.email}</h3>
         </div>
-        <div class="pb-4 pr-4 ">
+        <div class="pb-4 pr-4">
             <p class="text-base font-light">Phone Number</p>
             <h3 class="text-lg font-bold">{user.phone}</h3>
         </div>
@@ -70,34 +72,66 @@
     <div
         class="block max-w-sm w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow"
     >
-    <h1 class="text-xl font-bold text-default mb-3">Change Password</h1>
-    <p class="text-sm">You can change your password here.</p>
-        <div class="form-control mt-3 mb-3">
-            <label class="label">
-                <span class="label-text">Password</span>
-            </label>
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                class="input input-bordered"
-                value=""
-            />
-        </div>
-        <div class="form-control mt-3 mb-6">
-            <label class="label">
-                <span class="label-text">Password Confirmation</span>
-            </label>
-            <input
-                type="password"
-                name="password_confirmation"
-                placeholder="Password Confirmation"
-                class="input input-bordered"
-                value=""
-            />
-        </div>
-        <div class="text-center">
-            <button class="btn btn-primary " type="submit"> Change </button>
-        </div>
+        <h1 class="text-xl font-bold text-default mb-3">Change Password</h1>
+        <p class="text-sm">You can change your password here.</p>
+        <form
+            method="POST"
+            action="?/updatePassword"
+            use:enhance={() => {
+                return async ({ result }) => {
+                    if (result.type === "redirect") {
+                        toast.success("Success", { duration: 7000 });
+                    }
+                    if (result.type === "failure") {
+                        toast.error(result.data.error, { duration: 7000 });
+                    }
+
+                    await applyAction(result);
+                };
+            }}
+        >
+            <div class="form-control mt-3 mb-3">
+                <label class="label">
+                    <span class="label-text">Current Password</span>
+                </label>
+                <input
+                    type="password"
+                    name="current_password"
+                    placeholder="Current Password"
+                    class="input input-bordered"
+                    value=""
+                />
+            </div>
+            <div class="form-control mt-3 mb-3">
+                <label class="label">
+                    <span class="label-text">New Password</span>
+                </label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="New Password"
+                    class="input input-bordered"
+                    value=""
+                />
+            </div>
+            <div class="form-control mt-3 mb-6">
+                <label class="label">
+                    <span class="label-text">Password Confirmation</span>
+                </label>
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    placeholder="Password Confirmation"
+                    class="input input-bordered"
+                    value=""
+                />
+            </div>
+            <div class="form-control hidden">
+                <input type="hidden" name="id" value={user?.id} />
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit"> Change </button>
+            </div>
+        </form>
     </div>
 </div>

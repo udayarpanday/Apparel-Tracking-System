@@ -1,11 +1,20 @@
 import { apiErrorResponse } from "$lib/helper/helpers";
 import { httpPost } from "$lib/helper/https";
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 
-const forgotPassword = async ({ cookies, request }) => {
+let email = "";
+let token = "";
+export const load = async ({ url }) => {
+    token = url.searchParams.get("token");
+    email = url.searchParams.get("email");
+};
+
+const resetPassword = async ({ url, request }) => {
     const formData = await request.formData();
+    formData.set("email", email);
+    formData.set("token", token);
     try {
-        const response = await httpPost("api/forgot-password", formData, {
+        const response = await httpPost("api/reset-password", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -19,6 +28,7 @@ const forgotPassword = async ({ cookies, request }) => {
             return fail(500, apiErrors);
         }
     }
+    throw redirect(302, "/login");
 };
 
-export const actions = { forgotPassword };
+export const actions = { resetPassword };
