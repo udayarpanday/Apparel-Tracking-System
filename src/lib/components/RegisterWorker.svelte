@@ -18,7 +18,7 @@
 <div class="text-right">
     {#if modaltype == "add"}
         <label for="my-modal-9993" class="btn btn-primary btn-block btn-outline">
-            Register an User</label
+            Register an Worker</label
         >
     {:else if modaltype == "update"}
         <label for="my-modal-9993" class="cursor-pointer">

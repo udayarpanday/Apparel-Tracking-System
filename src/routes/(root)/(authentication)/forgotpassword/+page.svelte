@@ -4,6 +4,7 @@
     import { applyAction, enhance } from "$app/forms";
     let loading = false;
 </script>
+
 <div class="w-full max-w-sm mx-auto h-screen flex items-center justify-center">
     <form
         class="bg-white p-8 rounded-lg shadow-md"
@@ -48,7 +49,10 @@
             />
         </div>
         <div class="flex items-center justify-center">
-            <button disabled={loading} class={`btn btn-primary ${loading?"btn-disabled":""}`} type="submit">
+            <button
+                class={`btn btn-primary ${loading ? "btn-disabled" : ""}`}
+                type="submit"
+            >
                 Send Email
             </button>
         </div>

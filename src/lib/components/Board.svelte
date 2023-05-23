@@ -26,19 +26,24 @@
     const updateBoard = async (updatedId) => {
         if (updatedColumns.length == 2) {
             const payload = {
-                board_category_id: updatedColumns[0]+1,
+                board_category_id: updatedColumns[0] + 1,
             };
-            const response = await fetch(`http://127.0.0.1:8000/api/tasks/${updatedId}`, {
-                method: "PUT",
-                body: JSON.stringify(payload),
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: cookie,
-                },
-            });
+            const response = await fetch(
+                `http://127.0.0.1:8000/api/tasks/${updatedId}`,
+                {
+                    method: "PUT",
+                    body: JSON.stringify(payload),
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: cookie,
+                    },
+                }
+            );
             updatedColumns = [];
         }
     };
+    import { page } from "$app/stores";
+    let user = $page.data.user;
 </script>
 
 <h1 class="text-xl font-bold text-default mb-5">Project Task Board</h1>
@@ -65,8 +70,9 @@
                     handleItemFinalize(idx, newItems, updatedId);
                 }}
             />
-
-            <AddTaskModal boardId={id} {workerList} />
+            {#if name == "Order received" && user.role[0]=='admin'}
+                <AddTaskModal boardId={id} {workerList} />
+            {/if}
         </div>
     {/each}
 </section>

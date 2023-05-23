@@ -13,13 +13,12 @@
         <h1 class="text-xl font-bold text-default">Worker List</h1>
         <RegisterUser modaltype="add" />
     </div>
-    <div class="block p-3 bg-white border border-gray-200 rounded-lg shadow">
+    <div class="block p-3 bg-white border border-gray-200 rounded-lg shadow overflow-x-auto">
         <table class="table table-zebra w-full">
             <thead>
                 <tr>
                     <th>S.No</th>
                     <th>Name</th>
-                    <th>Role</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
@@ -40,7 +39,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{worker.role[0]}</td>
+
                         <td>{worker.email}</td>
                         <td>{worker.phone}</td>
                         <td>{worker.address}</td>

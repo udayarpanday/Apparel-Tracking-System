@@ -53,13 +53,7 @@
             />
         </div>
         <div class="flex items-center justify-between">
-            <button class="btn btn-primary" type="submit"> Log in </button>
-            <a
-                class="inline-block align-baseline font-medium text-sm text-primary hover:text-primary-dark"
-                href="/forgotpassword"
-            >
-                Forgot Password?
-            </a>
+            <button class="btn btn-primary" type="submit"> Submit </button>
         </div>
     </form>
 </div>
